@@ -36,8 +36,8 @@ class MessageController extends Controller
      */
     public function create()
     {
-       return view('message.create');
-   }
+     return view('message.create');
+ }
 
     /**
      * Store a newly created resource in storage.
@@ -47,6 +47,23 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        $this->validate($request,[
+
+            'to' => 'required',
+            'corpo' => 'required|min:10',
+            'assunto'=> 'required|min:3'
+
+        ],[
+
+            'to.required'=>'O Email do destinatário é de caracter Obrigatório',
+            'corpo.required'=>'É Obrigatório preencher o Corpo da  Mensagem',
+            'corpo.min'=>'O corpo deve ter no mínimo 10 caracteres',
+            'assunto.required'=>'O assunto deve ser Preenchido Obrigatoriamente',
+            'assunto.min'=>'O assunto deve ter no mínimo 3 caracteres'
+        ]);
+
         $m= Message::create($request->all());
         // return response()->json(['email'=>$m, 'message'=>'cliente Adicionado com sucesso']);
 
@@ -107,13 +124,13 @@ class MessageController extends Controller
 
 
     public function emailenviado(){
-       $meuemail =Auth()->user()->email;
+     $meuemail =Auth()->user()->email;
 
 
-       $emails = DB::table('messages')->where('from', $meuemail)->orderBy('id', 'desc')->get();
+     $emails = DB::table('messages')->where('from', $meuemail)->orderBy('id', 'desc')->get();
 
-       $numeroemailenviado = DB::table('messages')->where('from', $meuemail)->count();
+     $numeroemailenviado = DB::table('messages')->where('from', $meuemail)->count();
 
-       return view('message.emailenviado', compact('emails'))->with('nremail', $numeroemailenviado);
-   }
+     return view('message.emailenviado', compact('emails'))->with('nremail', $numeroemailenviado);
+ }
 }

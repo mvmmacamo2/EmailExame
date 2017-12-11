@@ -9,10 +9,10 @@
     <div class="panel panel-default">
         <div class="panel-heading">
 
-         <p><strong class="text-success"> {{ $nremail }} </strong> emails Recebidos</p>
+            <p><strong class="text-danger"> {{ $nremail }} </strong> <small class="text-success">emails Recebidos</small></p>
     {{--        <pre>
 
-
+ 
     </pre> --}}
 </div>
 
